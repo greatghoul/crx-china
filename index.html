@@ -34,9 +34,9 @@
             <div class="clearfix"></div>
             <small class="badge badge-pill badge-secondary">{{ category.fields.Name }}</small>
             <p class="card-text mt-2">{{ extension.fields.Notes }}</p>
-            <a :href="extension.fields.Webstore" v-if="extension.fields.Webstore" class="btn btn-light"><i class="fa fa-chrome"></i></a>
-            <a :href="extension.fields.Source" v-if="extension.fields.Source" class="btn btn-light"><i class="fa fa-github"></i></a>
-            <a :href="extension.fields.Site" v-if="extension.fields.Site" class="btn btn-light"><i class="fa fa-home"></i></a>
+            <a :href="extension.fields.Webstore" v-if="extension.fields.Webstore" class="btn btn-light" target="_blank"><i class="fa fa-chrome"></i></a>
+            <a :href="extension.fields.Source" v-if="extension.fields.Source" class="btn btn-light" target="_blank"><i class="fa fa-github"></i></a>
+            <a :href="extension.fields.Site" v-if="extension.fields.Site" class="btn btn-light" target="_blank"><i class="fa fa-home"></i></a>
           </div>
           <div class="col-sm-4 d-none d-sm-block">
             <div class="position-relative h-100">

@@ -9,25 +9,36 @@
 
   <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="./assets/styles/app.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.bootcss.com/vue/2.5.15/vue.min.js"></script>
 
   <script type="text/x-template" id="tpl-category">
-    <li class="nav-item"><a class="nav-link active" :href="categoryLink">{{ category.fields.Name }}</a></li>
+    <a class="list-group-item list-group-item-action" :href="categoryLink">{{ category.fields.Name }}</a>
   </script>
 
   <script type="text/x-template" id="tpl-extension">
     <div class="card mb-3">
+      <img class="card-img-top" :src="thumb" alt="截图" class="d-block d-sm-none w-100">
       <div class="card-body">
-        <h5 class="card-title float-left">{{ extension.fields.Name }}</h5>
-        <small class="float-left text-muted ml-2" style="line-height: 24px;"><i class="fa fa-user"></i> {{ author.fields.Name }}</small>
+        <div class="row">
+          <div class="col-sm-8">
+            <h5 class="card-title float-left">{{ extension.fields.Name }}</h5>
+            <small class="float-left text-muted ml-2" style="line-height: 24px;"><i class="fa fa-user"></i> {{ author.fields.Name }}</small>
 
-        <div class="clearfix"></div>
-        <p class="card-text">{{ extension.fields.Notes }}</p>
-        <a :href="extension.fields.Webstore" class="btn btn-light"><i class="fa fa-chrome"></i></a>
-        <a :href="extension.fields.Source" class="btn btn-light"><i class="fa fa-github"></i></a>
-        <a :href="extension.fields.Site" class="btn btn-light"><i class="fa fa-home"></i></a>
+            <div class="clearfix"></div>
+            <p class="card-text">{{ extension.fields.Notes }}</p>
+            <a :href="extension.fields.Webstore" class="btn btn-light"><i class="fa fa-chrome"></i></a>
+            <a :href="extension.fields.Source" class="btn btn-light"><i class="fa fa-github"></i></a>
+            <a :href="extension.fields.Site" class="btn btn-light"><i class="fa fa-home"></i></a>
+          </div>
+          <div class="col-sm-4 d-none d-sm-block">
+            <div class="position-relative h-100">
+              <img :src="thumb" alt="截图" class="extension-thumb position-absolute" /> 
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </script>
@@ -41,12 +52,17 @@
       <p class="text-muted">推荐中国开发者的优秀 Chrome 扩展程序</p>
     </div>
     <div class="row">
-      <div class="col-md-4">
-        <ul class="nav flex-column">
-          <category v-for="category in categories" :key="category.id" :category="category" />
-        </ul>
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-header">
+            全部分类
+          </div>
+          <div class="list-group list-group-flush">
+            <category v-for="category in categories" :key="category.id" :category="category" />
+          </div>
+        </div>
       </div>
-      <div class="col-md-8">
+      <div class="col-md-9">
         <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example">
           <extension v-for="extension in extensions" :key="extension.id" :extension="extension" />
         </div>

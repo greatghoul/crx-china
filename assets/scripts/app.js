@@ -35,6 +35,9 @@ Vue.component('extension', {
     },
     author () {
       return this.$parent.findAuthor(this.extension.fields.Author[0]) || EMPTY_RECORD
+    },
+    thumb () {
+      return this.extension.fields.Screenshots[0].thumbnails.large.url
     }
   }
 })

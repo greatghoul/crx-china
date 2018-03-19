@@ -1,16 +1,8 @@
 /* global Vue, $ */
 
-const BASE_URL = 'https://api.airtable.com/v0/app9lJrTtrcn4wEUf/'
+const DATA_URL = 'https://api.jsonbin.io/b/5aafd05d5d1dee610788f818/latest'
 const EMPTY_RECORD = { fields: {} }
 const CATEGORY_ALL = { id: null, fields: { Name: '全部扩展' } }
-
-function fetchRecords (table) {
-  return $.ajax({
-    url: BASE_URL + table,
-    dataType: 'json',
-    headers: { 'Authorization': 'Bearer keyYLxMmgG51LPZ77' }
-  }).then(data => data.records)
-}
 
 Vue.component('category', {
   template: '#tpl-category',
@@ -61,9 +53,7 @@ var app = new Vue({
     }
   },
   created () {
-    this.fetchCategories()
-    this.fetchAuthors()
-    this.fetchExtensions()
+    this.fetchData()
   },
   computed: {
     filteredExtensions () {
@@ -92,18 +82,13 @@ var app = new Vue({
     findCategory (id) {
       return this.categories.find(record => record.id === id)
     },
-    fetchCategories () {
-      fetchRecords('categories')
-        .then(categories => { this.categories = [CATEGORY_ALL].concat(categories) })
-        .then(() => this.initActiveCategory())
-    },
-    fetchExtensions () {
-      fetchRecords('extensions')
-        .then(extensions => { this.extensions = extensions })
-    },
-    fetchAuthors () {
-      fetchRecords('authors')
-        .then(authors => { this.authors = authors })
+    fetchData () {
+      $.getJSON(DATA_URL, data => {
+        this.categories = [CATEGORY_ALL].concat(data.categories)
+        this.authors = data.authors
+        this.extensions = data.extensions
+        this.setActiveCategory()
+      })
     }
   }
 })

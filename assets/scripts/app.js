@@ -1,7 +1,5 @@
 /* global Vue, $ */
 
-// "https://api.airtable.com/v0/app9lJrTtrcn4wEUf/Table%201?maxRecords=3&view=Grid%20view" \
-// -H "Authorization: Bearer keyYLxMmgG51LPZ77"
 const BASE_URL = 'https://api.airtable.com/v0/app9lJrTtrcn4wEUf/'
 const EMPTY_RECORD = { fields: {} }
 const CATEGORY_ALL = { id: null, fields: { Name: '全部扩展' } }

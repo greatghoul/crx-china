@@ -15,7 +15,11 @@
   <script src="https://cdn.bootcss.com/vue/2.5.15/vue.min.js"></script>
 
   <script type="text/x-template" id="tpl-category">
-    <a class="list-group-item list-group-item-action" :href="categoryLink">{{ category.fields.Name }}</a>
+    <a class="list-group-item list-group-item-action"
+       :class="{ active: active }" :href="categoryLink"
+       @click="setActive">
+       {{ category.fields.Name }}
+    </a>
   </script>
 
   <script type="text/x-template" id="tpl-extension">
@@ -28,10 +32,11 @@
             <small class="float-left text-muted ml-2" style="line-height: 24px;"><i class="fa fa-user"></i> {{ author.fields.Name }}</small>
 
             <div class="clearfix"></div>
-            <p class="card-text">{{ extension.fields.Notes }}</p>
-            <a :href="extension.fields.Webstore" class="btn btn-light"><i class="fa fa-chrome"></i></a>
-            <a :href="extension.fields.Source" class="btn btn-light"><i class="fa fa-github"></i></a>
-            <a :href="extension.fields.Site" class="btn btn-light"><i class="fa fa-home"></i></a>
+            <small class="badge badge-pill badge-secondary">{{ category.fields.Name }}</small>
+            <p class="card-text mt-2">{{ extension.fields.Notes }}</p>
+            <a :href="extension.fields.Webstore" v-if="extension.fields.Webstore" class="btn btn-light"><i class="fa fa-chrome"></i></a>
+            <a :href="extension.fields.Source" v-if="extension.fields.Source" class="btn btn-light"><i class="fa fa-github"></i></a>
+            <a :href="extension.fields.Site" v-if="extension.fields.Site" class="btn btn-light"><i class="fa fa-home"></i></a>
           </div>
           <div class="col-sm-4 d-none d-sm-block">
             <div class="position-relative h-100">
@@ -53,22 +58,30 @@
     </div>
     <div class="row">
       <div class="col-md-3">
-        <div class="card">
-          <div class="card-header">
-            全部分类
-          </div>
+        <div class="card mb-3">
+          <div class="card-header">分类</div>
           <div class="list-group list-group-flush">
-            <category v-for="category in categories" :key="category.id" :category="category" />
+            <category v-for="category in categories" :key="category.id"
+                      :category="category"
+                      :active="activeCategoryId == category.id"
+                      @active="setActiveCategory" />
           </div>
         </div>
       </div>
       <div class="col-md-9">
-        <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example">
-          <extension v-for="extension in extensions" :key="extension.id" :extension="extension" />
+        <div style="min-height: 300px;">
+          <extension v-for="extension in filteredExtensions" :key="extension.id" :extension="extension" />
         </div>
       </div>
     </div>
   </div>
+
+  <footer class="mt-5">
+    <div class="container text-center">
+      <p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a>, Powered by <a href="https://airtable.com/invite/r/0MNN2ozI" style="font-weight: bold">Airtable</a></p>
+    </div>
+    
+  </footer>
 
   <script type="text/javascript" src="./assets/scripts/app.js"></script>
 </body>

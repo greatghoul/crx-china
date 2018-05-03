@@ -1,6 +1,6 @@
 /* global Vue, $ */
 
-const DATA_URL = 'https://api.jsonbin.io/b/5aafd05d5d1dee610788f818/latest'
+const DATA_URL = 'https://gist.githubusercontent.com/greatghoul/08f1269e370f967b2cd9c423272eae6d/raw/data.json'
 const EMPTY_RECORD = { fields: {} }
 const CATEGORY_ALL = { id: null, fields: { Name: '全部扩展' } }
 

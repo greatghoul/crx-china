@@ -1,4 +1,4 @@
-/* global Vue, $ */
+/* global Vue, $, _ */
 
 const DATA_URL = 'https://gist.githubusercontent.com/greatghoul/08f1269e370f967b2cd9c423272eae6d/raw/data.json'
 const EMPTY_RECORD = { fields: {} }
@@ -31,13 +31,15 @@ Vue.component('extension', {
       return '#' + this.extension.id
     },
     category () {
-      return this.$parent.findCategory(this.extension.fields.Category[0]) || EMPTY_RECORD
+      var category = _.get(this.extension, 'fields.Category[0]')
+      return this.$parent.findCategory(category) || EMPTY_RECORD
     },
     author () {
-      return this.$parent.findAuthor(this.extension.fields.Author[0]) || EMPTY_RECORD
+      var author = _.get(this.extension, 'fields.Author[0]')
+      return this.$parent.findAuthor(author) || EMPTY_RECORD
     },
     thumb () {
-      return this.extension.fields.Screenshots[0].thumbnails.large.url
+      return _.get(this.extension, 'fields.Screenshots[0].thumbnails.large.url')
     }
   }
 })
@@ -84,9 +86,10 @@ var app = new Vue({
     },
     fetchData () {
       $.getJSON(DATA_URL, data => {
-        this.categories = [CATEGORY_ALL].concat(data.categories)
-        this.authors = data.authors
-        this.extensions = data.extensions
+        var categories = _.filter(data.categories, (item) => item.fields.Name)
+        this.categories = [CATEGORY_ALL].concat(categories)
+        this.authors = _.filter(data.authors, (item) => item.fields.Name)
+        this.extensions = _.filter(data.extensions, (item) => item.fields.Name)
         this.setActiveCategory()
       })
     }
